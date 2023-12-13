@@ -16,14 +16,91 @@
             background-color: darkslateblue;
             color: dodgerblue;
          }
+
+         .container{
+             max-width: 600px;
+             margin: 50px auto;
+             padding: 20px;
+             background-color: #333333;
+             box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+         }
+
+         .warning{
+             color: rgb(219, 19, 19);
+         }
         
          h1{
              text-align: center;
+
          }
      </style>
     </head>
     <!--Add the body tag to contain the visible page content-->
     <body>
-    
+        <!-- This will be our MAIN container for our content -->
+        <div class="container">
+            <!-- Lets put a header for our tile in our secret agent app -->
+            <h1>Secret Agent HQ</h1>
+            <!-- Add instructions for our user -->
+            <p>Agent, enter your details to recieve the mission</p>
+            <!-- Add a single form for all inputs needed -->
+            <form id="agentForm">
+                <!-- Add a Label to label the first name textbox -->
+                <label for="firstName">First Name:</label>
+                <!-- Add the first name textbox -->
+                <input type="text" id="firstName" placeholder="Enter your first name" required><br><br>
+                <!-- Add a Label to label the last name textbox -->
+                <label for="LastName">Last Name:</label>
+                <!-- Add the last name textbox -->
+                <input type="text" id="lastName" placeholder="Enter your last name" required><br><br>
+                <!-- Add a Label to label the zipcode textbox -->
+                <label for="zipcode">Zipcode:</label>
+                <!-- Add the zipcode textbox -->
+                <input type="text" id="zipcode" placeholder="Enter your zipcode" required><br><br>
+                <!-- Add the submit button -->
+                <input type="submit" value="Get Mission">
+            </form>
+
+            <!-- Add a div to hold a hidden warning message -->
+            <div class="warning" id="warningMessage"></div>
+
+            <!-- Add a div to hold the mission details which are hidden by default -->
+            <div id="secretMission" style="display: none;">
+                Your mission should you choose to accept it: "Guard the mall entrance"
+            </div>
+
+            <!-- Add our javascript for validation -->
+            <script>
+                // Add an event listener to our form for validation when user presses submit the form
+                document.getElementById("agentForm").addEventListener("submit", function(event){
+                    // Prevent the default form submit action
+                    event.preventDefault();
+                    // get the data values from the form the user typed in.
+                    const firstName =  document.getElementById("firstName").value
+                    const lastName =  document.getElementById("lastName").value
+                    const zipcode =  document.getElementById("zipcode").value
+
+                    // Combine the first and last name
+                    const fullName = firstName + " " + lastName;
+
+                    // Validate the length of the entire name so that it is not over 20 characters long
+                    if(fullName.length > 20){
+                        // If it is over 20 characters long, show the warning message
+                        document.getElementById("warningMessage").innerHTML = "Full Name is too long for our Records";
+                        return;
+                    }
+
+                    // Check if the zipcode is 5 characters long
+                    if(zipcode.length != 5){
+                        // If it is not 5 characters long, show the warning message
+                        document.getElementById("warningMessage").innerHTML = "Invalid zipcode";
+                        return;
+                    }
+                    // If all validation passes then show the mission details
+                    document.getElementById("secretMission").style.display = "block";
+                });
+            </script>
+
+        </div>
     </body>
 </html>
